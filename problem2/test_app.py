@@ -34,6 +34,18 @@ def test_create(client):
     assert len(weather_data) == initial_length+1
 
 
+def test_update(client):
+    payload = {"Mumbai": {
+        "temperature": 10,
+        "weather": "Rainy"}
+    }
+    response = client.put("/New York", json=payload)
+    data = response.get_json()
+    assert response.status_code == 200
+    assert "msg" in data
+    assert data["msg"] == "City Updated Successfully"
+
+
 def test_delete(client):
     initial_length = len(weather_data)
     response = client.delete("/Austin")
